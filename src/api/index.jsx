@@ -87,7 +87,7 @@ export const tripApi = {
     request('/driver/myBusTrip', {}, auth),
   end: (auth) =>
     request('/driver/endBusTrip', { method: 'PUT' }, auth),
-  export const tripHistoryApi = {
+
   getAll: (auth) =>
     request('/admin/tripHistory', {}, auth),
 }
