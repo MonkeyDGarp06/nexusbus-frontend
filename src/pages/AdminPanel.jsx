@@ -38,6 +38,7 @@ export default function AdminPanel() {
     { id: 'dashboard',  label: 'Home' },
     { id: 'analytics',  label: 'Stats' },
     { id: 'trips', label: 'Live' },
+    { id: 'history', label: 'History' },
     { id: 'drivers', label: 'Drivers' },
     { id: 'stops', label: 'Stops' },
     { id: 'routes', label: 'Routes' },
