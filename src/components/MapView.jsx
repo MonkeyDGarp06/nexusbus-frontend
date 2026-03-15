@@ -25,7 +25,7 @@ const busIcon = L.divIcon({
     font-size:16px;
     border:2px solid white;
     box-shadow:0 2px 6px rgba(0,0,0,0.3);
-  ">??</div>`,
+  "></div>`,
   iconSize: [32, 32],
   iconAnchor: [16, 16],
 })

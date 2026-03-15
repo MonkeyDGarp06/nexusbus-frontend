@@ -87,7 +87,7 @@ function Dashboard({ stats, setTab }) {
         {tiles.map(t => (
           <button key={t.label} onClick={() => setTab(t.tab)}
             className={`${t.color} rounded-xl p-3 text-left hover:opacity-80 transition-opacity`}>
-            <p className="text-2xl font-black mb-1">{stats ? (t.value ?? 0) : '...'}</p>
+            <p className="text-2xl font-black mb-1">{stats ? (t.value) : '...'}</p>
             <p className="text-xs font-semibold uppercase tracking-wide opacity-70 leading-tight">{t.label}</p>
           </button>
         ))}
