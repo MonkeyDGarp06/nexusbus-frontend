@@ -94,7 +94,7 @@ function RouteCard({ route, source, destination }) {
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
             <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z"/>
+              <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z" />
             </svg>
           </div>
           <div>
@@ -117,7 +117,7 @@ function RouteCard({ route, source, destination }) {
                 className={`text-xs px-2.5 py-1 rounded-full border font-medium
                   ${isSource ? 'bg-blue-600 text-white border-blue-600' :
                     isDest ? 'bg-green-600 text-white border-green-600' :
-                    'bg-gray-50 text-gray-600 border-gray-200'}`}
+                      'bg-gray-50 text-gray-600 border-gray-200'}`}
               >
                 {name}
               </span>

@@ -24,7 +24,7 @@ export default function SearchPage() {
         const q = query.toLowerCase()
         setStops(s.filter(x => x.stopName.toLowerCase().includes(q)))
         setRoutes(r.filter(x => x.routeName.toLowerCase().includes(q)))
-      } catch {}
+      } catch { }
       setLoading(false)
     }
     load()
@@ -86,27 +86,27 @@ export default function SearchPage() {
             {routes.length === 0
               ? <p className={`text-sm ${dark ? 'text-slate-500' : 'text-gray-400'}`}>No routes match "{query}"</p>
               : <div className="space-y-2">
-                  {routes.map(route => (
-                    <button key={route.routeId}
-                      onClick={() => { addRecentRoute(route); navigate(`/routes/${route.routeId}`) }}
-                      className={rowClass}>
-                      <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-blue-900/30' : 'bg-blue-50'}`}>
-                          <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z"/>
-                          </svg>
-                        </div>
-                        <div>
-                          <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Route {route.routeName}</p>
-                          <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>{route.routeStops?.length || 0} stops</p>
-                        </div>
+                {routes.map(route => (
+                  <button key={route.routeId}
+                    onClick={() => { addRecentRoute(route); navigate(`/routes/${route.routeId}`) }}
+                    className={rowClass}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-blue-900/30' : 'bg-blue-50'}`}>
+                        <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z" />
+                        </svg>
                       </div>
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  ))}
-                </div>
+                      <div>
+                        <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Route {route.routeName}</p>
+                        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>{route.routeStops?.length || 0} stops</p>
+                      </div>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                ))}
+              </div>
             }
           </div>
 
@@ -117,30 +117,30 @@ export default function SearchPage() {
             {stops.length === 0
               ? <p className={`text-sm ${dark ? 'text-slate-500' : 'text-gray-400'}`}>No stops match "{query}"</p>
               : <div className="space-y-2">
-                  {stops.map(stop => (
-                    <button key={stop.stopId} onClick={() => navigate(`/stops/${stop.stopId}`)}
-                      className={rowClass}>
-                      <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-amber-900/30' : 'bg-amber-50'}`}>
-                          <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
-                              d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>{stop.stopName}</p>
-                          <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>
-                            {stop.routeStops?.length || 0} route{stop.routeStops?.length !== 1 ? 's' : ''}
-                          </p>
-                        </div>
+                {stops.map(stop => (
+                  <button key={stop.stopId} onClick={() => navigate(`/stops/${stop.stopId}`)}
+                    className={rowClass}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-amber-900/30' : 'bg-amber-50'}`}>
+                        <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
+                            d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
                       </div>
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  ))}
-                </div>
+                      <div>
+                        <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>{stop.stopName}</p>
+                        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>
+                          {stop.routeStops?.length || 0} route{stop.routeStops?.length !== 1 ? 's' : ''}
+                        </p>
+                      </div>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                ))}
+              </div>
             }
           </div>
         </div>

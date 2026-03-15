@@ -178,7 +178,7 @@ export default function DriverPanel({ onTripChange }) {
       <div>
         <PageHeader title="Trip Complete" />
         <div className={`${cardClass} text-center mb-4`}>
-          <div className="text-5xl mb-3">??</div>
+          <div className="text-5xl mb-3"></div>
           <h2 className={`text-xl font-bold mb-1 ${dark ? 'text-white' : 'text-gray-900'}`}>
             Route {tripSummary.routeName} Done!
           </h2>
@@ -186,10 +186,10 @@ export default function DriverPanel({ onTripChange }) {
 
           <div className="grid grid-cols-2 gap-3 mb-5">
             {[
-              { label: 'Duration', value: `${tripSummary.duration} min`, icon: '??' },
-              { label: 'Distance', value: `${tripSummary.distanceKm} km`, icon: '??' },
-              { label: 'Stops Covered', value: `${tripSummary.stopsVisited}/${tripSummary.totalStops}`, icon: '??' },
-              { label: 'Status', value: 'Completed', icon: '?' },
+              { label: 'Duration', value: `${tripSummary.duration} min`, icon: '' },
+              { label: 'Distance', value: `${tripSummary.distanceKm} km`, icon: '' },
+              { label: 'Stops Covered', value: `${tripSummary.stopsVisited}/${tripSummary.totalStops}`, icon: '' },
+              { label: 'Status', value: 'Completed', icon: '' },
             ].map(s => (
               <div key={s.label} className={`rounded-xl p-3 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
                 <p className="text-xl mb-1">{s.icon}</p>
@@ -280,7 +280,7 @@ export default function DriverPanel({ onTripChange }) {
                                 dark ? 'bg-slate-800 border-slate-600 text-slate-300' : 'bg-white border-gray-200 text-gray-700'}`}>
                             {isVisited && '? '}{rs.busStop?.stopName}
                           </span>
-                          {i < arr.length - 1 && <span className="text-gray-300 text-xs">?</span>}
+                          {i < arr.length - 1 && <span className="text-gray-300 text-xs">→</span>}
                         </span>
                       )
                     })}

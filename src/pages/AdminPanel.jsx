@@ -35,8 +35,8 @@ export default function AdminPanel() {
   }, [auth])
 
   const TABS = [
-    { id: 'dashboard',  label: 'Home' },
-    { id: 'analytics',  label: 'Stats' },
+    { id: 'dashboard', label: 'Home' },
+    { id: 'analytics', label: 'Stats' },
     { id: 'trips', label: 'Live' },
     { id: 'history', label: 'History' },
     { id: 'drivers', label: 'Drivers' },
@@ -65,7 +65,7 @@ export default function AdminPanel() {
       {tab === 'stops' && <StopsAdmin auth={auth} toast={toast} />}
       {tab === 'routes' && <RoutesAdmin auth={auth} toast={toast} />}
       {tab === 'fleet' && <FleetAdmin auth={auth} toast={toast} />}
-      {tab === 'history'   && <TripHistory auth={auth} toast={toast} dark={dark} />}
+      {tab === 'history' && <TripHistory auth={auth} toast={toast} dark={dark} />}
       {tab === 'analytics' && <Analytics auth={auth} dark={dark} />}
       <Toast toasts={toasts} remove={remove} />
     </div>
@@ -153,7 +153,7 @@ function LiveTrips({ auth, toast }) {
           </div>
           {t.busLocation?.busLatitude
             ? <p className="text-xs text-green-600 font-medium">
-              ?? {parseFloat(t.busLocation.busLatitude).toFixed(5)}, {parseFloat(t.busLocation.busLongitude).toFixed(5)}
+              {parseFloat(t.busLocation.busLatitude).toFixed(5)}, {parseFloat(t.busLocation.busLongitude).toFixed(5)}
             </p>
             : <p className="text-xs text-gray-400">No GPS yet</p>
           }
@@ -231,7 +231,7 @@ function DriversAdmin({ auth, toast }) {
 
       {!users[0]?.userId && users.length > 0 && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-3 text-xs text-amber-700 font-medium">
-          ?? userId missing from API response. Ask your friend to add userId to UsersDto to enable delete and role change.
+          userId missing from API response. Ask your friend to add userId to UsersDto to enable delete and role change.
         </div>
       )}
 
@@ -389,7 +389,7 @@ function StopsAdmin({ auth, toast }) {
                 value={form.stopLongitude} onChange={setField('stopLongitude')} required className="flex-1" />
             </div>
             <div className="flex gap-2">
-              <Button type="button" variant="secondary" size="sm" onClick={() => useGPS('add')}>?? GPS</Button>
+              <Button type="button" variant="secondary" size="sm" onClick={() => useGPS('add')}> GPS</Button>
               <Button type="submit" disabled={saving}>{saving ? 'Adding...' : 'Add Stop'}</Button>
             </div>
           </form>
@@ -408,7 +408,7 @@ function StopsAdmin({ auth, toast }) {
                 required className="flex-1" />
             </div>
             <div className="flex gap-2">
-              <Button type="button" variant="secondary" size="sm" onClick={() => useGPS('edit')}>?? GPS</Button>
+              <Button type="button" variant="secondary" size="sm" onClick={() => useGPS('edit')}> GPS</Button>
               <Button type="submit" disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
               <Button type="button" variant="ghost" size="sm" onClick={() => setEditingStop(null)}>Cancel</Button>
             </div>
@@ -638,7 +638,7 @@ function RoutesAdmin({ auth, toast }) {
                         <span className="text-xs bg-gray-50 border border-gray-200 text-gray-600 px-2 py-0.5 rounded-full">
                           {rs.sequence}. {rs.busStop?.stopName}
                         </span>
-                        {i < arr.length - 1 && <span className="text-gray-300 text-xs">?</span>}
+                        {i < arr.length - 1 && <span className="text-gray-300 text-xs">→</span>}
                       </span>
                     ))}
                   </div>
@@ -777,28 +777,28 @@ function TripHistory({ auth, toast, dark }) {
       {filtered.length === 0
         ? <EmptyState message="No completed trips found." type="trips" />
         : <div className="space-y-3">
-            {filtered.map(t => (
-              <div key={t.busTripId} className={cardClass}>
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <p className={`font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>Route {t.route?.routeName}</p>
-                    <Badge color="gray">#{t.busTripId}</Badge>
-                  </div>
-                  <Badge color="gray">Completed</Badge>
+          {filtered.map(t => (
+            <div key={t.busTripId} className={cardClass}>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <p className={`font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>Route {t.route?.routeName}</p>
+                  <Badge color="gray">#{t.busTripId}</Badge>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className={`rounded-lg p-2 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
-                    <p className={`uppercase tracking-wide font-semibold mb-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Bus</p>
-                    <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.bus?.numberPlate || ''}</p>
-                  </div>
-                  <div className={`rounded-lg p-2 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
-                    <p className={`uppercase tracking-wide font-semibold mb-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Driver</p>
-                    <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.users?.fname || t.users?.emailId || ''}</p>
-                  </div>
+                <Badge color="gray">Completed</Badge>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className={`rounded-lg p-2 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
+                  <p className={`uppercase tracking-wide font-semibold mb-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Bus</p>
+                  <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.bus?.numberPlate || ''}</p>
+                </div>
+                <div className={`rounded-lg p-2 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
+                  <p className={`uppercase tracking-wide font-semibold mb-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Driver</p>
+                  <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.users?.fname || t.users?.emailId || ''}</p>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
       }
     </div>
   )
@@ -842,7 +842,7 @@ function Analytics({ auth, dark }) {
           stopCoverage,
           busUtilization: buses.length > 0 ? Math.round((activeTripsArr.length / buses.length) * 100) : 0,
         })
-      } catch {}
+      } catch { }
       setLoading(false)
     }
     load()
@@ -861,11 +861,11 @@ function Analytics({ auth, dark }) {
         <p className={labelClass}>Overview</p>
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: 'Routes',   value: data.totalRoutes,  color: 'text-blue-600',   bg: dark ? 'bg-blue-900/20' : 'bg-blue-50' },
-            { label: 'Stops',    value: data.totalStops,   color: 'text-amber-600',  bg: dark ? 'bg-amber-900/20' : 'bg-amber-50' },
-            { label: 'Buses',    value: data.totalBuses,   color: 'text-purple-600', bg: dark ? 'bg-purple-900/20' : 'bg-purple-50' },
-            { label: 'Drivers',  value: data.totalDrivers, color: 'text-rose-600',   bg: dark ? 'bg-rose-900/20' : 'bg-rose-50' },
-            { label: 'Active',   value: data.activeTrips,  color: 'text-green-600',  bg: dark ? 'bg-green-900/20' : 'bg-green-50' },
+            { label: 'Routes', value: data.totalRoutes, color: 'text-blue-600', bg: dark ? 'bg-blue-900/20' : 'bg-blue-50' },
+            { label: 'Stops', value: data.totalStops, color: 'text-amber-600', bg: dark ? 'bg-amber-900/20' : 'bg-amber-50' },
+            { label: 'Buses', value: data.totalBuses, color: 'text-purple-600', bg: dark ? 'bg-purple-900/20' : 'bg-purple-50' },
+            { label: 'Drivers', value: data.totalDrivers, color: 'text-rose-600', bg: dark ? 'bg-rose-900/20' : 'bg-rose-50' },
+            { label: 'Active', value: data.activeTrips, color: 'text-green-600', bg: dark ? 'bg-green-900/20' : 'bg-green-50' },
             { label: 'Bus Use%', value: `${data.busUtilization}%`, color: 'text-indigo-600', bg: dark ? 'bg-indigo-900/20' : 'bg-indigo-50' },
           ].map(s => (
             <div key={s.label} className={`${s.bg} rounded-xl p-3 text-center`}>
@@ -954,10 +954,10 @@ function Analytics({ auth, dark }) {
         <p className={labelClass}>System Health</p>
         <div className="space-y-2">
           {[
-            { label: 'Backend API',    status: 'online',  color: 'bg-green-500' },
-            { label: 'GPS Tracking',   status: data.activeTrips > 0 ? 'active' : 'idle', color: data.activeTrips > 0 ? 'bg-green-500' : 'bg-amber-400' },
-            { label: 'Live Updates',   status: 'running', color: 'bg-green-500' },
-            { label: 'Map Service',    status: 'online',  color: 'bg-green-500' },
+            { label: 'Backend API', status: 'online', color: 'bg-green-500' },
+            { label: 'GPS Tracking', status: data.activeTrips > 0 ? 'active' : 'idle', color: data.activeTrips > 0 ? 'bg-green-500' : 'bg-amber-400' },
+            { label: 'Live Updates', status: 'running', color: 'bg-green-500' },
+            { label: 'Map Service', status: 'online', color: 'bg-green-500' },
           ].map(item => (
             <div key={item.label} className="flex items-center justify-between">
               <span className={`text-sm ${dark ? 'text-slate-300' : 'text-gray-700'}`}>{item.label}</span>

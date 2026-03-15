@@ -29,7 +29,7 @@ const highlightStopIcon = L.divIcon({
 function makeBusIcon(rotation = 0) {
   return L.divIcon({
     className: '',
-    html: `<div style="width:36px;height:36px;background:#2563eb;border-radius:50%;border:3px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;transform:rotate(${rotation}deg);transition:transform 0.3s ease;">??</div>`,
+    html: `<div style="width:36px;height:36px;background:#2563eb;border-radius:50%;border:3px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;transform:rotate(${rotation}deg);transition:transform 0.3s ease;"></div>`,
     iconSize: [36, 36], iconAnchor: [18, 18],
   })
 }
@@ -247,7 +247,7 @@ export default function RouteDetail() {
         <div>
           <h1 className={`text-xl font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>Route {route.routeName}</h1>
           <p className={`text-sm ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
-            {sortedStops.length} stops � {trips.length} active bus{trips.length !== 1 ? 'es' : ''}
+            {sortedStops.length} stops  {trips.length} active bus{trips.length !== 1 ? 'es' : ''}
           </p>
         </div>
         <div className={`flex rounded-lg p-1 gap-1 ${dark ? 'bg-slate-700' : 'bg-gray-100'}`}>

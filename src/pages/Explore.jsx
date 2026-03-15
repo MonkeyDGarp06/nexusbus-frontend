@@ -141,7 +141,7 @@ export default function Explore() {
       {favorites.length > 0 && (
         <div>
           <p className={`text-xs font-semibold uppercase tracking-wide mb-2 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
-            ? Saved Routes
+            ⭐Saved Routes
           </p>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {favorites.map(fav => (
@@ -149,7 +149,7 @@ export default function Explore() {
                 onClick={() => navigate(`/routes/${fav.routeId}`)}
                 className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl border text-sm font-medium transition-all
                   ${dark ? 'bg-slate-800 border-slate-600 text-white hover:border-blue-500' : 'bg-white border-gray-200 text-gray-800 hover:border-blue-300'}`}>
-                <span>??</span>
+                <span></span>
                 Route {fav.routeName}
                 <span className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>{fav.stops} stops</span>
               </button>
@@ -330,7 +330,7 @@ export default function Explore() {
                     </div>
                     {t.busLocation?.busLatitude != null
                       ? <p className={`text-xs mt-0.5 truncate ${dark ? 'text-slate-400' : 'text-gray-400'}`}>
-                        ?? {t.busLocation.busLatitude}, {t.busLocation.busLongitude}
+                        {t.busLocation.busLatitude}, {t.busLocation.busLongitude}
                       </p>
                       : <p className={`text-xs mt-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Location not updated yet</p>
                     }
@@ -372,7 +372,7 @@ export default function Explore() {
                 <button onClick={() => toggleFavorite(route)}
                   className={`text-xs font-medium flex items-center gap-1 transition-colors
                     ${isFav(route.routeId) ? 'text-amber-500' : dark ? 'text-slate-500 hover:text-amber-400' : 'text-gray-400 hover:text-amber-500'}`}>
-                  {isFav(route.routeId) ? '? Saved' : '? Save'}
+                  {isFav(route.routeId) ? ' Saved' : ' Save'}
                 </button>
               </div>
             </div>

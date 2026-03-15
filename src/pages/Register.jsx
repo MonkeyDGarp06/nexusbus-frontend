@@ -23,8 +23,8 @@ export default function Register() {
   }
 
   const roles = [
-    { value: 'User', label: 'Passenger', desc: 'Browse routes and track buses', icon: '??' },
-    { value: 'driver', label: 'Driver', desc: 'Operate buses and update location', icon: '??' },
+    { value: 'User', label: 'Passenger', desc: 'Browse routes and track buses', icon: '' },
+    { value: 'driver', label: 'Driver', desc: 'Operate buses and update location', icon: '' },
   ]
 
   return (
@@ -33,7 +33,7 @@ export default function Register() {
         <div className="flex items-center justify-center gap-2.5 mb-8">
           <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z"/>
+              <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z" />
             </svg>
           </div>
           <span className="font-bold text-gray-900 text-xl">NexusBus</span>

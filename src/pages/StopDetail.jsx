@@ -18,8 +18,8 @@ function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371000
   const dLat = (lat2 - lat1) * Math.PI / 180
   const dLon = (lon2 - lon1) * Math.PI / 180
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 }
 
 // Estimate ETA: distance / avg bus speed (20 km/h in city)
@@ -29,7 +29,7 @@ function estimateETA(distanceMeters) {
   if (seconds < 60) return 'Arriving soon'
   const mins = Math.round(seconds / 60)
   if (mins < 60) return `~${mins} min`
-  return `~${Math.round(mins/60)}h ${mins%60}m`
+  return `~${Math.round(mins / 60)}h ${mins % 60}m`
 }
 
 export default function StopDetail() {
@@ -43,7 +43,7 @@ export default function StopDetail() {
   const intervalRef = useRef(null)
 
   useEffect(() => {
-    stopsApi.getById(id).then(setStop).catch(() => {}).finally(() => setLoading(false))
+    stopsApi.getById(id).then(setStop).catch(() => { }).finally(() => setLoading(false))
   }, [id])
 
   // Load arrivals for this stop
@@ -73,7 +73,7 @@ export default function StopDetail() {
             // Only show buses that haven't passed this stop yet
             // Check if bus sequence is before this stop's sequence
             const routeStops = trip.route?.routeStops || []
-            const sorted = routeStops.slice().sort((a,b) => a.sequence - b.sequence)
+            const sorted = routeStops.slice().sort((a, b) => a.sequence - b.sequence)
             const thisStopSeq = rs.sequence
             // Find closest stop to bus
             let closestSeq = 0
@@ -112,7 +112,7 @@ export default function StopDetail() {
             })
           }
         }
-      } catch {}
+      } catch { }
     }
     results.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity))
     setArrivals(results)
@@ -167,7 +167,7 @@ export default function StopDetail() {
 
         {arrivals.length === 0 && !loadingArrivals ? (
           <div className={`border rounded-xl px-4 py-4 text-center ${dark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'}`}>
-            <p className="text-2xl mb-1">??</p>
+            <p className="text-2xl mb-1"></p>
             <p className={`text-sm font-medium ${dark ? 'text-slate-300' : 'text-gray-600'}`}>No buses en route right now</p>
             <p className={`text-xs mt-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Updates every 15 seconds</p>
           </div>
@@ -180,7 +180,7 @@ export default function StopDetail() {
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0
                     ${a.eta === 'Arriving soon' ? 'bg-green-500' : a.eta === 'No GPS' ? 'bg-gray-400' : 'bg-blue-600'}`}>
-                    <span className="text-white text-lg">??</span>
+                    <span className="text-white text-lg"></span>
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
@@ -191,7 +191,7 @@ export default function StopDetail() {
                     </div>
                     <p className={`text-xs mt-0.5 ${dark ? 'text-slate-400' : 'text-gray-400'}`}>
                       {a.numberPlate}
-                      {a.distance && <span> · {a.distance < 1000 ? `${Math.round(a.distance)}m away` : `${(a.distance/1000).toFixed(1)}km away`}</span>}
+                      {a.distance && <span>  {a.distance < 1000 ? `${Math.round(a.distance)}m away` : `${(a.distance / 1000).toFixed(1)}km away`}</span>}
                     </p>
                   </div>
                 </div>
@@ -211,27 +211,27 @@ export default function StopDetail() {
       {routes.length === 0
         ? <EmptyState message="No routes pass through this stop yet." />
         : <div className="space-y-2">
-            {routes.map(rs => (
-              <button key={rs.routeStopId} onClick={() => navigate(`/routes/${rs.route?.routeId}`)}
-                className={`w-full border rounded-xl px-4 py-3 flex items-center justify-between hover:border-blue-300 hover:shadow-sm transition-all text-left
+          {routes.map(rs => (
+            <button key={rs.routeStopId} onClick={() => navigate(`/routes/${rs.route?.routeId}`)}
+              className={`w-full border rounded-xl px-4 py-3 flex items-center justify-between hover:border-blue-300 hover:shadow-sm transition-all text-left
                   ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200'}`}>
-                <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-blue-900/30' : 'bg-blue-50'}`}>
-                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className={`font-medium ${dark ? 'text-white' : 'text-gray-900'}`}>Route {rs.route?.routeName}</p>
-                    <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>Stop sequence #{rs.sequence}</p>
-                  </div>
+              <div className="flex items-center gap-3">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-blue-900/30' : 'bg-blue-50'}`}>
+                  <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z" />
+                  </svg>
                 </div>
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            ))}
-          </div>
+                <div>
+                  <p className={`font-medium ${dark ? 'text-white' : 'text-gray-900'}`}>Route {rs.route?.routeName}</p>
+                  <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>Stop sequence #{rs.sequence}</p>
+                </div>
+              </div>
+              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          ))}
+        </div>
       }
     </div>
   )
