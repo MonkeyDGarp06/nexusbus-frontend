@@ -15,6 +15,13 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false)
   const [input, setInput] = useState(query)
 
+  useEffect(() => {
+  if (!query) {
+    const input = document.getElementById('search-input')
+    if (input) input.focus()
+  }
+}, [])
+
   // If user clicks back or navigates away without typing, go back
 useEffect(() => {
   if (!query) {
@@ -64,13 +71,18 @@ useEffect(() => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
           </svg>
           <input
-            id="search-input"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder="Search routes and stops..."
-            autoFocus
-            className={`flex-1 text-sm outline-none bg-transparent ${dark ? 'text-white placeholder-slate-500' : 'text-gray-900 placeholder-gray-400'}`}
-          />
+              id="search-input"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onBlur={() => {
+                setTimeout(() => {
+                  if (!input) navigate(-1)
+                }, 200)
+              }}
+              placeholder="Search routes and stops..."
+              autoFocus
+              className={`flex-1 text-sm outline-none bg-transparent ${dark ? 'text-white placeholder-slate-500' : 'text-gray-900 placeholder-gray-400'}`}
+            />
           {input && (
             <button type="button" onClick={() => { setInput(''); setSearchParams({}) }}
               className="text-gray-400 hover:text-gray-600">
