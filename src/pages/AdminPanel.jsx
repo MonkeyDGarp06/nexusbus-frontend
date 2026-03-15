@@ -734,7 +734,7 @@ function TripHistory({ auth, toast, dark }) {
   useEffect(() => {
     async function load() {
       try {
-        const json = await tripApi.getTripHistory(auth)
+        const json = await tripHistoryApi.getAll(auth)
         setTrips(Array.isArray(json) ? json : [])
       } catch { toast('Could not load trip history', 'error') }
       setLoading(false)
