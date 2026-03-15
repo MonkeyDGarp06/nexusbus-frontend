@@ -87,8 +87,9 @@ export const tripApi = {
     request('/driver/myBusTrip', {}, auth),
   end: (auth) =>
     request('/driver/endBusTrip', { method: 'PUT' }, auth),
-  updateLocation: (body, auth) =>
-    request('/driver/busLocation', { method: 'PUT', body: JSON.stringify(body) }, auth),
+  export const tripHistoryApi = {
+  getAll: (auth) =>
+    request('/admin/tripHistory', {}, auth),
 }
 
 export const usersApi = {
