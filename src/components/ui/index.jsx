@@ -1,10 +1,10 @@
 export function Button({ children, onClick, type = 'button', variant = 'primary', size = 'md', disabled = false, className = '', fullWidth = false }) {
   const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed'
   const variants = {
-    primary:   'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
     secondary: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-blue-500',
-    danger:    'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-    ghost:     'text-gray-600 hover:bg-gray-100 focus:ring-gray-400',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+    ghost: 'text-gray-600 hover:bg-gray-100 focus:ring-gray-400',
   }
   const sizes = { sm: 'px-3 py-1.5 text-sm gap-1.5', md: 'px-4 py-2 text-sm gap-2', lg: 'px-5 py-2.5 text-base gap-2' }
   return (
@@ -39,10 +39,10 @@ export function Card({ children, className = '', padding = true }) {
 
 export function Badge({ children, color = 'gray' }) {
   const colors = {
-    gray:  'bg-gray-100 text-gray-600',
-    blue:  'bg-blue-50 text-blue-700',
+    gray: 'bg-gray-100 text-gray-600',
+    blue: 'bg-blue-50 text-blue-700',
     green: 'bg-green-50 text-green-700',
-    red:   'bg-red-50 text-red-700',
+    red: 'bg-red-50 text-red-700',
     amber: 'bg-amber-50 text-amber-700',
   }
   return (
@@ -63,12 +63,12 @@ export function Spinner({ size = 'sm' }) {
 }
 
 const EMPTY_STATES = {
-  routes:  { icon: '???', title: 'No routes yet',    sub: 'Routes will appear here once added' },
-  stops:   { icon: '??', title: 'No stops yet',     sub: 'Stops will appear here once added' },
-  buses:   { icon: '??', title: 'No buses found',   sub: 'Try a different search term' },
-  trips:   { icon: '??', title: 'No active trips',  sub: 'Trips appear when drivers start them' },
-  search:  { icon: '??', title: 'No results',       sub: 'Try different keywords' },
-  default: { icon: '??', title: 'Nothing here yet', sub: 'Check back later' },
+  routes: { icon: '', title: 'No routes yet', sub: 'Routes will appear here once added' },
+  stops: { icon: '', title: 'No stops yet', sub: 'Stops will appear here once added' },
+  buses: { icon: '', title: 'No buses found', sub: 'Try a different search term' },
+  trips: { icon: '', title: 'No active trips', sub: 'Trips appear when drivers start them' },
+  search: { icon: '', title: 'No results', sub: 'Try different keywords' },
+  default: { icon: '', title: 'Nothing here yet', sub: 'Check back later' },
 }
 
 export function EmptyState({ message = 'No data found', type = 'default' }) {
@@ -104,11 +104,11 @@ export function Toast({ toasts, remove }) {
             ${t.type === 'error'
               ? 'bg-red-600 text-white border-red-500'
               : t.type === 'warning'
-              ? 'bg-amber-500 text-white border-amber-400'
-              : 'bg-gray-900 text-white border-gray-700'}`}
+                ? 'bg-amber-500 text-white border-amber-400'
+                : 'bg-gray-900 text-white border-gray-700'}`}
           onClick={() => remove(t.id)}>
           <span className="text-base shrink-0">
-            {t.type === 'error' ? '?' : t.type === 'warning' ? '??' : '?'}
+            {t.type === 'error' ? '?' : t.type === 'warning' ? '⚠️' : '✓'}
           </span>
           <span className="flex-1">{t.message}</span>
           {t.onUndo && (
