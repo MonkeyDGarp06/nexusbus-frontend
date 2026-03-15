@@ -291,7 +291,7 @@ export default function DriverPanel({ onTripChange }) {
             {/* GPS Status */}
             <div className={`p-3 rounded-xl mb-4 ${dark ? 'bg-slate-900 border border-slate-700' : 'bg-blue-50 border border-blue-100'}`}>
               <div className="flex items-center justify-between mb-1">
-                <p className={`text-xs font-semibold ${dark ? 'text-blue-400' : 'text-blue-700'}`}>Auto GPS � every 10s</p>
+                <p className={`text-xs font-semibold ${dark ? 'text-blue-400' : 'text-blue-700'}`}>Auto GPS every 10s</p>
                 <button onClick={() => sendGPS(true)}
                   className={`text-xs font-medium border rounded-lg px-2.5 py-1 transition-colors
                     ${dark ? 'border-slate-600 text-slate-300 bg-slate-800 hover:bg-slate-700' : 'border-blue-300 text-blue-600 bg-white hover:bg-blue-50'}`}>

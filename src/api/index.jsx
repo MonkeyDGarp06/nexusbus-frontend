@@ -27,40 +27,26 @@ export const authApi = {
 }
 
 export const stopsApi = {
-  getAll: () =>
-    request('/stop'),
-  getById: (id) =>
-    request(`/stop/${id}`),
-  search: (stopName) =>
-    request(`/search/stop?stopName=${encodeURIComponent(stopName)}`),
-  getRoutesByStopName: (stopName) =>
-    request(`/StopName/${encodeURIComponent(stopName)}`),
-  create: (body, auth) =>
-    request('/admin/stop', { method: 'POST', body: JSON.stringify(body) }, auth),
-  delete: (id, auth) =>
-    request(`/admin/stops/${id}`, { method: 'DELETE' }, auth),
+  getAll: () => request('/stop'),
+  getById: (id) => request(`/stop/${id}`),
+  search: (stopName) => request(`/search/stop?stopName=${encodeURIComponent(stopName)}`),
+  getRoutesByStopName: (stopName) => request(`/StopName/${encodeURIComponent(stopName)}`),
+  create: (body, auth) => request('/admin/stop', { method: 'POST', body: JSON.stringify(body) }, auth),
+  delete: (id, auth) => request(`/admin/stops/${id}`, { method: 'DELETE' }, auth),
 }
 
 export const routesApi = {
-  getAll: () =>
-    request('/routes'),
-  getById: (id) =>
-    request(`/route/${id}`),
-  getStopsByRouteName: (routeName) =>
-    request(`/routeName/${encodeURIComponent(routeName)}`),
-  search: (routeName) =>
-    request(`/search/route?routeName=${encodeURIComponent(routeName)}`),
-  create: (body, auth) =>
-    request('/admin/route', { method: 'POST', body: JSON.stringify(body) }, auth),
-  update: (id, body, auth) =>
-    request(`/admin/route/${id}`, { method: 'PUT', body: JSON.stringify(body) }, auth),
-  delete: (id, auth) =>
-    request(`/admin/route/${id}`, { method: 'DELETE' }, auth),
+  getAll: () => request('/routes'),
+  getById: (id) => request(`/route/${id}`),
+  getStopsByRouteName: (routeName) => request(`/routeName/${encodeURIComponent(routeName)}`),
+  search: (routeName) => request(`/search/route?routeName=${encodeURIComponent(routeName)}`),
+  create: (body, auth) => request('/admin/route', { method: 'POST', body: JSON.stringify(body) }, auth),
+  update: (id, body, auth) => request(`/admin/route/${id}`, { method: 'PUT', body: JSON.stringify(body) }, auth),
+  delete: (id, auth) => request(`/admin/route/${id}`, { method: 'DELETE' }, auth),
 }
 
 export const routeStopsApi = {
-  getAll: () =>
-    request('/route/stop'),
+  getAll: () => request('/route/stop'),
   addStopToRoute: (routeId, stopId, sequence, auth) =>
     request(`/admin/route/${routeId}/addStop/${stopId}/${sequence}`, { method: 'POST' }, auth),
   removeStopFromRoute: (routeStopId, auth) =>
@@ -70,44 +56,28 @@ export const routeStopsApi = {
 }
 
 export const busApi = {
-  search: (query, auth) =>
-    request(`/bus?bus=${encodeURIComponent(query || 'MH')}`, {}, auth),
-  create: (body, auth) =>
-    request('/admin/bus', { method: 'POST', body: JSON.stringify(body) }, auth),
+  search: (query, auth) => request(`/bus?bus=${encodeURIComponent(query || 'MH')}`, {}, auth),
+  create: (body, auth) => request('/admin/bus', { method: 'POST', body: JSON.stringify(body) }, auth),
 }
 
 export const tripApi = {
-  getByRoute: (routeName) =>
-    request(`/busTrip?routeName=${encodeURIComponent(routeName)}`),
-  getAllActive: (auth) =>
-    request('/admin/getAllBusTrips', {}, auth),
-  start: (body, auth) =>
-    request('/driver/busTrip', { method: 'POST', body: JSON.stringify(body) }, auth),
-  getMyTrip: (auth) =>
-    request('/driver/myBusTrip', {}, auth),
-  end: (auth) =>
-    request('/driver/endBusTrip', { method: 'PUT' }, auth),
-
-  getAll: (auth) =>
-    request('/admin/tripHistory', {}, auth),
+  getByRoute: (routeName) => request(`/busTrip?routeName=${encodeURIComponent(routeName)}`),
+  getAllActive: (auth) => request('/admin/getAllBusTrips', {}, auth),
+  start: (body, auth) => request('/driver/busTrip', { method: 'POST', body: JSON.stringify(body) }, auth),
+  getMyTrip: (auth) => request('/driver/myBusTrip', {}, auth),
+  end: (auth) => request('/driver/endBusTrip', { method: 'PUT' }, auth),
+  updateLocation: (body, auth) =>
+    request('/driver/busLocation', { method: 'PUT', body: JSON.stringify(body) }, auth),
+  getTripHistory: (auth) => request('/admin/tripHistory', {}, auth),
 }
 
 export const usersApi = {
-  getAll: (auth) =>
-    request('/admin/users', {}, auth),
+  getAll: (auth) => request('/admin/users', {}, auth),
   changeRole: (userId, role, auth) =>
     request(`/admin/users/${userId}/role?role=${encodeURIComponent(role)}`, { method: 'PUT' }, auth),
-  deleteUser: (userId, auth) =>
-    request(`/admin/users/${userId}`, { method: 'DELETE' }, auth),
+  deleteUser: (userId, auth) => request(`/admin/users/${userId}`, { method: 'DELETE' }, auth),
 }
 
 export const tripHistoryApi = {
-  getAll: async (auth) => {
-    const res = await fetch('/api/trip-history', {
-      headers: {
-        Authorization: `Bearer ${auth?.token}`
-      }
-    })
-    return res.json()
-  }
+  getAll: (auth) => request('/admin/tripHistory', {}, auth),
 }
