@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect, useCallback } from 'react'
-import { stopsApi, routesApi, routeStopsApi, busApi, tripApi, usersApi } from '../api'
+import { stopsApi, routesApi, routeStopsApi, busApi, tripApi, usersApi, tripHistoryApi } from '../api'
 import { useAuth } from '../context/AuthContext'
 import { Button, Input, Card, Badge, EmptyState, Spinner, Toast } from '../components/ui'
 import { useToast } from '../components/useToast'
