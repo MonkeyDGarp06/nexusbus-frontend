@@ -39,7 +39,9 @@ export default function SearchPage() {
     ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200'} ${extra}`
 
   return (
-    <div>
+    <div onClick={(e) => {
+    if (!query && e.target === e.currentTarget) navigate(-1)
+  }}>
       {/* Search bar */}
       <form onSubmit={handleSearch} className="flex gap-2 mb-6">
         <div className={`flex-1 flex items-center gap-2 border rounded-xl px-4 py-2.5 focus-within:ring-2 focus-within:ring-blue-500 transition
