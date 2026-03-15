@@ -100,3 +100,14 @@ export const usersApi = {
   deleteUser: (userId, auth) =>
     request(`/admin/users/${userId}`, { method: 'DELETE' }, auth),
 }
+
+export const tripHistoryApi = {
+  getAll: async (auth) => {
+    const res = await fetch('/api/trip-history', {
+      headers: {
+        Authorization: `Bearer ${auth?.token}`
+      }
+    })
+    return res.json()
+  }
+}
