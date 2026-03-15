@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { stopsApi, routesApi } from '../api'
-import { Spinner, EmptyState } from '../components/ui'
+import { Spinner } from '../components/ui'
 import { useTheme } from '../context/ThemeContext'
 import { addRecentRoute } from './Routes'
 
@@ -13,29 +13,8 @@ export default function SearchPage() {
   const [stops, setStops] = useState([])
   const [routes, setRoutes] = useState([])
   const [loading, setLoading] = useState(false)
-  const [input, setInput] = useState(query)
+  const [inputVal, setInputVal] = useState(query)
 
-  useEffect(() => {
-  if (!query) {
-    const input = document.getElementById('search-input')
-    if (input) input.focus()
-  }
-}, [])
-
-  // If user clicks back or navigates away without typing, go back
-useEffect(() => {
-  if (!query) {
-    const handleClick = (e) => {
-      const searchBar = document.getElementById('search-input')
-      if (searchBar && !searchBar.contains(e.target)) {
-        navigate(-1)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }
-}, [query, navigate])
-  
   useEffect(() => {
     async function load() {
       if (!query) return
@@ -53,16 +32,20 @@ useEffect(() => {
 
   function handleSearch(e) {
     e.preventDefault()
-    if (input.trim()) setSearchParams({ q: input.trim() })
+    if (inputVal.trim()) setSearchParams({ q: inputVal.trim() })
   }
 
-  const rowClass = (extra = '') => `w-full border rounded-xl px-4 py-3.5 flex items-center justify-between hover:border-blue-300 hover:shadow-sm transition-all text-left
-    ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200'} ${extra}`
+  function handleBlur() {
+    setTimeout(() => {
+      if (!inputVal.trim() && !query) navigate(-1)
+    }, 150)
+  }
+
+  const rowClass = `w-full border rounded-xl px-4 py-3.5 flex items-center justify-between hover:border-blue-300 hover:shadow-sm transition-all text-left
+    ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200'}`
 
   return (
-    <div onClick={(e) => {
-    if (!query && e.target === e.currentTarget) navigate(-1)
-  }}>
+    <div>
       {/* Search bar */}
       <form onSubmit={handleSearch} className="flex gap-2 mb-6">
         <div className={`flex-1 flex items-center gap-2 border rounded-xl px-4 py-2.5 focus-within:ring-2 focus-within:ring-blue-500 transition
@@ -71,20 +54,15 @@ useEffect(() => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
           </svg>
           <input
-              id="search-input"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onBlur={() => {
-                setTimeout(() => {
-                  if (!input) navigate(-1)
-                }, 200)
-              }}
-              placeholder="Search routes and stops..."
-              autoFocus
-              className={`flex-1 text-sm outline-none bg-transparent ${dark ? 'text-white placeholder-slate-500' : 'text-gray-900 placeholder-gray-400'}`}
-            />
-          {input && (
-            <button type="button" onClick={() => { setInput(''); setSearchParams({}) }}
+            value={inputVal}
+            onChange={e => setInputVal(e.target.value)}
+            onBlur={handleBlur}
+            placeholder="Search routes and stops..."
+            autoFocus
+            className={`flex-1 text-sm outline-none bg-transparent ${dark ? 'text-white placeholder-slate-500' : 'text-gray-900 placeholder-gray-400'}`}
+          />
+          {inputVal && (
+            <button type="button" onClick={() => { setInputVal(''); setSearchParams({}) }}
               className="text-gray-400 hover:text-gray-600">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -101,7 +79,6 @@ useEffect(() => {
 
       {!loading && query && (
         <div className="space-y-6">
-          {/* Routes */}
           <div>
             <p className={`text-xs font-semibold uppercase tracking-wide mb-2 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
               Routes ({routes.length})
@@ -110,8 +87,9 @@ useEffect(() => {
               ? <p className={`text-sm ${dark ? 'text-slate-500' : 'text-gray-400'}`}>No routes match "{query}"</p>
               : <div className="space-y-2">
                   {routes.map(route => (
-                    <button key={route.routeId} onClick={() => { addRecentRoute(route); navigate(`/routes/${route.routeId}`) }}
-                      className={rowClass()}>
+                    <button key={route.routeId}
+                      onClick={() => { addRecentRoute(route); navigate(`/routes/${route.routeId}`) }}
+                      className={rowClass}>
                       <div className="flex items-center gap-3">
                         <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-blue-900/30' : 'bg-blue-50'}`}>
                           <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
@@ -132,7 +110,6 @@ useEffect(() => {
             }
           </div>
 
-          {/* Stops */}
           <div>
             <p className={`text-xs font-semibold uppercase tracking-wide mb-2 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
               Stops ({stops.length})
@@ -142,7 +119,7 @@ useEffect(() => {
               : <div className="space-y-2">
                   {stops.map(stop => (
                     <button key={stop.stopId} onClick={() => navigate(`/stops/${stop.stopId}`)}
-                      className={rowClass()}>
+                      className={rowClass}>
                       <div className="flex items-center gap-3">
                         <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${dark ? 'bg-amber-900/30' : 'bg-amber-50'}`}>
                           <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,39 +147,27 @@ useEffect(() => {
       )}
 
       {!loading && !query && (
-  <div className="space-y-4">
-    <p className={`text-xs font-semibold uppercase tracking-wide mb-3 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
-      Quick Links
-    </p>
-    <button onClick={() => navigate('/explore')}
-      className={`w-full border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-all
-        ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
-      <span className="text-xl">🏠</span>
-      <div>
-        <p className={`font-semibold text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>Go to Explore</p>
-        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>Find buses, live tracking, all routes</p>
-      </div>
-    </button>
-    <button onClick={() => navigate('/stops')}
-      className={`w-full border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-all
-        ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
-      <span className="text-xl">🚏</span>
-      <div>
-        <p className={`font-semibold text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>Browse Stops</p>
-        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>Find stops near you</p>
-      </div>
-    </button>
-    <button onClick={() => navigate('/routes')}
-      className={`w-full border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-all
-        ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
-      <span className="text-xl">🗺️</span>
-      <div>
-        <p className={`font-semibold text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>Browse Routes</p>
-        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>See all available routes</p>
-      </div>
-    </button>
-  </div>
-)}
+        <div className="space-y-3">
+          <p className={`text-xs font-semibold uppercase tracking-wide mb-2 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
+            Quick Links
+          </p>
+          {[
+            { icon: '🏠', label: 'Go to Explore', sub: 'Find buses, live tracking, all routes', to: '/explore' },
+            { icon: '🚏', label: 'Browse Stops', sub: 'Find stops near you', to: '/stops' },
+            { icon: '🗺️', label: 'Browse Routes', sub: 'See all available routes', to: '/routes' },
+          ].map(item => (
+            <button key={item.to} onClick={() => navigate(item.to)}
+              className={`w-full border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-all
+                ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
+              <span className="text-xl">{item.icon}</span>
+              <div>
+                <p className={`font-semibold text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>{item.label}</p>
+                <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>{item.sub}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
