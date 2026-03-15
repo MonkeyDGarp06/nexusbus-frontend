@@ -15,6 +15,20 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false)
   const [input, setInput] = useState(query)
 
+  // If user clicks back or navigates away without typing, go back
+useEffect(() => {
+  if (!query) {
+    const handleClick = (e) => {
+      const searchBar = document.getElementById('search-input')
+      if (searchBar && !searchBar.contains(e.target)) {
+        navigate(-1)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }
+}, [query, navigate])
+  
   useEffect(() => {
     async function load() {
       if (!query) return
