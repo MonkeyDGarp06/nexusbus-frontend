@@ -65,6 +65,8 @@ export default function AdminPanel() {
       {tab === 'stops' && <StopsAdmin auth={auth} toast={toast} />}
       {tab === 'routes' && <RoutesAdmin auth={auth} toast={toast} />}
       {tab === 'fleet' && <FleetAdmin auth={auth} toast={toast} />}
+      {tab === 'history'   && <TripHistory auth={auth} toast={toast} dark={dark} />}
+      {tab === 'analytics' && <Analytics auth={auth} dark={dark} />}
       <Toast toasts={toasts} remove={remove} />
     </div>
   )
