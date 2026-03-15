@@ -280,7 +280,7 @@ export default function DriverPanel({ onTripChange }) {
                                 dark ? 'bg-slate-800 border-slate-600 text-slate-300' : 'bg-white border-gray-200 text-gray-700'}`}>
                             {isVisited && '? '}{rs.busStop?.stopName}
                           </span>
-                          {i < arr.length - 1 && <span className="text-gray-300 text-xs">→</span>}
+                          {i < arr.length - 1 && <span className="text-gray-300 text-xs"></span>}
                         </span>
                       )
                     })}
