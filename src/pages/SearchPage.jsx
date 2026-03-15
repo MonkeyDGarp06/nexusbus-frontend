@@ -141,8 +141,39 @@ export default function SearchPage() {
       )}
 
       {!loading && !query && (
-        <EmptyState message="Type something to search routes and stops." />
-      )}
+  <div className="space-y-4">
+    <p className={`text-xs font-semibold uppercase tracking-wide mb-3 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
+      Quick Links
+    </p>
+    <button onClick={() => navigate('/explore')}
+      className={`w-full border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-all
+        ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
+      <span className="text-xl">🏠</span>
+      <div>
+        <p className={`font-semibold text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>Go to Explore</p>
+        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>Find buses, live tracking, all routes</p>
+      </div>
+    </button>
+    <button onClick={() => navigate('/stops')}
+      className={`w-full border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-all
+        ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
+      <span className="text-xl">🚏</span>
+      <div>
+        <p className={`font-semibold text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>Browse Stops</p>
+        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>Find stops near you</p>
+      </div>
+    </button>
+    <button onClick={() => navigate('/routes')}
+      className={`w-full border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-all
+        ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
+      <span className="text-xl">🗺️</span>
+      <div>
+        <p className={`font-semibold text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>Browse Routes</p>
+        <p className={`text-xs ${dark ? 'text-slate-400' : 'text-gray-400'}`}>See all available routes</p>
+      </div>
+    </button>
+  </div>
+)}
     </div>
   )
 }
