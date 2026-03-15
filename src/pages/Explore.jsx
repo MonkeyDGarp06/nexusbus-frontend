@@ -49,8 +49,8 @@ export default function Explore() {
   const [searchError, setSearchError] = useState('')
 
   useEffect(() => {
-    stopsApi.getAll().then(setStops).catch(() => {})
-    routesApi.getAll().then(setRoutes).catch(() => {})
+    stopsApi.getAll().then(setStops).catch(() => { })
+    routesApi.getAll().then(setRoutes).catch(() => { })
   }, [])
 
   async function fetchLive() {
@@ -165,7 +165,7 @@ export default function Explore() {
           <div className="relative">
             <div className={wrapClass}>
               <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-              <input className={inputClass} placeholder="From — stop name"
+              <input className={inputClass} placeholder="From : stop name"
                 value={from} onChange={handleFromChange}
                 onFocus={() => setShowFromSug(true)}
                 onBlur={() => setTimeout(() => setShowFromSug(false), 150)} />
@@ -197,7 +197,7 @@ export default function Explore() {
           <div className="relative">
             <div className={wrapClass}>
               <div className="w-2 h-2 rounded-full bg-green-500 shrink-0" />
-              <input className={inputClass} placeholder="To — stop name"
+              <input className={inputClass} placeholder="To : stop name"
                 value={to} onChange={handleToChange}
                 onFocus={() => setShowToSug(true)}
                 onBlur={() => setTimeout(() => setShowToSug(false), 150)} />
@@ -238,59 +238,59 @@ export default function Explore() {
             : searchResults.length === 0
               ? <EmptyState message="No direct routes found." />
               : <div className="space-y-3">
-                  {searchResults.map(route => (
-                    <div key={route.routeId}
-                      className={`rounded-xl border overflow-hidden ${dark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'}`}>
-                      <button onClick={() => navigate(`/routes/${route.routeId}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`)}
-                        className="w-full px-4 py-3.5 text-left">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-                              <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z"/>
-                              </svg>
-                            </div>
-                            <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Route {route.routeName}</p>
+                {searchResults.map(route => (
+                  <div key={route.routeId}
+                    className={`rounded-xl border overflow-hidden ${dark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'}`}>
+                    <button onClick={() => navigate(`/routes/${route.routeId}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`)}
+                      className="w-full px-4 py-3.5 text-left">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                            <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z" />
+                            </svg>
                           </div>
-                          <div className="flex items-center gap-2">
-                            {route.activeTrips?.length > 0
-                              ? <Badge color="green">{route.activeTrips.length} live</Badge>
-                              : <Badge color="gray">No buses</Badge>}
-                          </div>
+                          <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Route {route.routeName}</p>
                         </div>
-                        {route.routeStops?.length > 0 && (
-                          <div className="flex items-center gap-1 flex-wrap">
-                            {route.routeStops.slice().sort((a, b) => a.sequence - b.sequence).map((rs, i, arr) => {
-                              const name = rs.busStop?.stopName
-                              const isFrom = name?.toLowerCase() === from.toLowerCase()
-                              const isTo = name?.toLowerCase() === to.toLowerCase()
-                              return (
-                                <span key={rs.routeStopId} className="flex items-center gap-1">
-                                  <span className={`text-xs px-2 py-0.5 rounded-full border font-medium
-                                    ${isFrom ? 'bg-blue-100 text-blue-700 border-blue-300' :
-                                      isTo ? 'bg-green-100 text-green-700 border-green-300' :
-                                      dark ? 'bg-slate-700 text-slate-300 border-slate-600' :
-                                      'bg-gray-50 text-gray-500 border-gray-200'}`}>
-                                    {name}
-                                  </span>
-                                  {i < arr.length - 1 && <span className="text-gray-300 text-xs">-</span>}
-                                </span>
-                              )
-                            })}
-                          </div>
-                        )}
-                      </button>
-                      {/* Favorite button */}
-                      <div className={`px-4 py-2 border-t flex justify-end ${dark ? 'border-slate-700' : 'border-gray-100'}`}>
-                        <button onClick={() => toggleFavorite(route)}
-                          className={`text-xs font-medium flex items-center gap-1 transition-colors
-                            ${isFav(route.routeId) ? 'text-amber-500' : dark ? 'text-slate-400 hover:text-amber-400' : 'text-gray-400 hover:text-amber-500'}`}>
-                          {isFav(route.routeId) ? '? Saved' : '? Save route'}
-                        </button>
+                        <div className="flex items-center gap-2">
+                          {route.activeTrips?.length > 0
+                            ? <Badge color="green">{route.activeTrips.length} live</Badge>
+                            : <Badge color="gray">No buses</Badge>}
+                        </div>
                       </div>
+                      {route.routeStops?.length > 0 && (
+                        <div className="flex items-center gap-1 flex-wrap">
+                          {route.routeStops.slice().sort((a, b) => a.sequence - b.sequence).map((rs, i, arr) => {
+                            const name = rs.busStop?.stopName
+                            const isFrom = name?.toLowerCase() === from.toLowerCase()
+                            const isTo = name?.toLowerCase() === to.toLowerCase()
+                            return (
+                              <span key={rs.routeStopId} className="flex items-center gap-1">
+                                <span className={`text-xs px-2 py-0.5 rounded-full border font-medium
+                                    ${isFrom ? 'bg-blue-100 text-blue-700 border-blue-300' :
+                                    isTo ? 'bg-green-100 text-green-700 border-green-300' :
+                                      dark ? 'bg-slate-700 text-slate-300 border-slate-600' :
+                                        'bg-gray-50 text-gray-500 border-gray-200'}`}>
+                                  {name}
+                                </span>
+                                {i < arr.length - 1 && <span className="text-gray-300 text-xs">-</span>}
+                              </span>
+                            )
+                          })}
+                        </div>
+                      )}
+                    </button>
+                    {/* Favorite button */}
+                    <div className={`px-4 py-2 border-t flex justify-end ${dark ? 'border-slate-700' : 'border-gray-100'}`}>
+                      <button onClick={() => toggleFavorite(route)}
+                        className={`text-xs font-medium flex items-center gap-1 transition-colors
+                            ${isFav(route.routeId) ? 'text-amber-500' : dark ? 'text-slate-400 hover:text-amber-400' : 'text-gray-400 hover:text-amber-500'}`}>
+                        {isFav(route.routeId) ? '? Saved' : '? Save route'}
+                      </button>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
           }
         </div>
       )}
@@ -299,7 +299,7 @@ export default function Explore() {
       {offline && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center gap-2">
           <svg className="w-4 h-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
           </svg>
           <p className="text-sm text-amber-700">Server is waking up, please wait...</p>
         </div>
@@ -315,32 +315,32 @@ export default function Explore() {
           ? <div className="flex justify-center py-6"><Spinner size="md" /></div>
           : liveTrips.length === 0
             ? <div className={`border rounded-xl px-4 py-3 text-sm ${dark ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-white border-gray-200 text-gray-400'}`}>
-                No buses running right now
-              </div>
+              No buses running right now
+            </div>
             : <div className="space-y-2">
-                {liveTrips.map(t => (
-                  <button key={t.busTripId} onClick={() => navigate(`/routes/${t.route?.routeId}`)}
-                    className={`w-full border rounded-xl px-4 py-3 flex items-center gap-3 transition-all text-left
+              {liveTrips.map(t => (
+                <button key={t.busTripId} onClick={() => navigate(`/routes/${t.route?.routeId}`)}
+                  className={`w-full border rounded-xl px-4 py-3 flex items-center gap-3 transition-all text-left
                       ${dark ? 'bg-slate-800 border-slate-700 hover:border-blue-500' : 'bg-white border-gray-200 hover:border-blue-300'}`}>
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className={`font-medium text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>{t.bus?.numberPlate}</p>
-                        <Badge color="blue">Route {t.route?.routeName}</Badge>
-                      </div>
-                      {t.busLocation?.busLatitude != null
-                        ? <p className={`text-xs mt-0.5 truncate ${dark ? 'text-slate-400' : 'text-gray-400'}`}>
-                            ?? {t.busLocation.busLatitude}, {t.busLocation.busLongitude}
-                          </p>
-                        : <p className={`text-xs mt-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Location not updated yet</p>
-                      }
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className={`font-medium text-sm ${dark ? 'text-white' : 'text-gray-900'}`}>{t.bus?.numberPlate}</p>
+                      <Badge color="blue">Route {t.route?.routeName}</Badge>
                     </div>
-                    <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                ))}
-              </div>
+                    {t.busLocation?.busLatitude != null
+                      ? <p className={`text-xs mt-0.5 truncate ${dark ? 'text-slate-400' : 'text-gray-400'}`}>
+                        ?? {t.busLocation.busLatitude}, {t.busLocation.busLongitude}
+                      </p>
+                      : <p className={`text-xs mt-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Location not updated yet</p>
+                    }
+                  </div>
+                  <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              ))}
+            </div>
         }
       </div>
 
@@ -356,7 +356,7 @@ export default function Explore() {
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
                     <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z"/>
+                      <path d="M4 16c0 .88.39 1.67 1 2.22V20a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-1.78A3 3 0 0020 16V8c0-3.5-3.58-4-8-4s-8 .5-8 4v8zm3.5 1a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm9 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6 9h12v4H6V9z" />
                     </svg>
                   </div>
                   <div>

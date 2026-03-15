@@ -9,8 +9,8 @@ function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371000
   const dLat = (lat2 - lat1) * Math.PI / 180
   const dLon = (lon2 - lon1) * Math.PI / 180
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 }
 
 function getNextStop(trip, currentLat, currentLng) {
@@ -32,9 +32,9 @@ function getNextStop(trip, currentLat, currentLng) {
 }
 
 const LOAD_LEVELS = [
-  { value: 'empty',   label: 'Empty',   color: 'bg-gray-100 text-gray-600 border-gray-200',   dot: 'bg-gray-400' },
+  { value: 'empty', label: 'Empty', color: 'bg-gray-100 text-gray-600 border-gray-200', dot: 'bg-gray-400' },
   { value: 'filling', label: 'Filling', color: 'bg-amber-50 text-amber-700 border-amber-200', dot: 'bg-amber-400' },
-  { value: 'full',    label: 'Full',    color: 'bg-red-50 text-red-700 border-red-200',       dot: 'bg-red-500' },
+  { value: 'full', label: 'Full', color: 'bg-red-50 text-red-700 border-red-200', dot: 'bg-red-500' },
 ]
 
 export default function DriverPanel({ onTripChange }) {
@@ -73,8 +73,8 @@ export default function DriverPanel({ onTripChange }) {
 
   useEffect(() => {
     loadMyTrip()
-    routesApi.getAll().then(setRoutes).catch(() => {})
-    busApi.search('', auth).then(setBuses).catch(() => {})
+    routesApi.getAll().then(setRoutes).catch(() => { })
+    busApi.search('', auth).then(setBuses).catch(() => { })
   }, [loadMyTrip])
 
   useEffect(() => {
@@ -186,10 +186,10 @@ export default function DriverPanel({ onTripChange }) {
 
           <div className="grid grid-cols-2 gap-3 mb-5">
             {[
-              { label: 'Duration',      value: `${tripSummary.duration} min`,           icon: '??' },
-              { label: 'Distance',      value: `${tripSummary.distanceKm} km`,          icon: '??' },
+              { label: 'Duration', value: `${tripSummary.duration} min`, icon: '??' },
+              { label: 'Distance', value: `${tripSummary.distanceKm} km`, icon: '??' },
               { label: 'Stops Covered', value: `${tripSummary.stopsVisited}/${tripSummary.totalStops}`, icon: '??' },
-              { label: 'Status',        value: 'Completed',                              icon: '?' },
+              { label: 'Status', value: 'Completed', icon: '?' },
             ].map(s => (
               <div key={s.label} className={`rounded-xl p-3 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
                 <p className="text-xl mb-1">{s.icon}</p>
@@ -238,7 +238,7 @@ export default function DriverPanel({ onTripChange }) {
                 <p className="text-xs font-semibold text-blue-200 uppercase tracking-wide mb-1">Next Stop</p>
                 <p className="text-white font-bold text-lg">{nextStop.stop?.busStop?.stopName}</p>
                 <p className="text-blue-200 text-xs mt-0.5">
-                  {nextStop.distance < 1000 ? `${Math.round(nextStop.distance)}m away` : `${(nextStop.distance/1000).toFixed(1)}km away`}
+                  {nextStop.distance < 1000 ? `${Math.round(nextStop.distance)}m away` : `${(nextStop.distance / 1000).toFixed(1)}km away`}
                 </p>
               </div>
             )}
@@ -277,7 +277,7 @@ export default function DriverPanel({ onTripChange }) {
                           <span className={`text-xs px-2 py-0.5 rounded-full border font-medium
                             ${isNext ? 'bg-blue-600 text-white border-blue-600' :
                               isVisited ? 'bg-green-100 text-green-700 border-green-300' :
-                              dark ? 'bg-slate-800 border-slate-600 text-slate-300' : 'bg-white border-gray-200 text-gray-700'}`}>
+                                dark ? 'bg-slate-800 border-slate-600 text-slate-300' : 'bg-white border-gray-200 text-gray-700'}`}>
                             {isVisited && '? '}{rs.busStop?.stopName}
                           </span>
                           {i < arr.length - 1 && <span className="text-gray-300 text-xs">?</span>}
@@ -291,7 +291,7 @@ export default function DriverPanel({ onTripChange }) {
             {/* GPS Status */}
             <div className={`p-3 rounded-xl mb-4 ${dark ? 'bg-slate-900 border border-slate-700' : 'bg-blue-50 border border-blue-100'}`}>
               <div className="flex items-center justify-between mb-1">
-                <p className={`text-xs font-semibold ${dark ? 'text-blue-400' : 'text-blue-700'}`}>Auto GPS — every 10s</p>
+                <p className={`text-xs font-semibold ${dark ? 'text-blue-400' : 'text-blue-700'}`}>Auto GPS ï¿½ every 10s</p>
                 <button onClick={() => sendGPS(true)}
                   className={`text-xs font-medium border rounded-lg px-2.5 py-1 transition-colors
                     ${dark ? 'border-slate-600 text-slate-300 bg-slate-800 hover:bg-slate-700' : 'border-blue-300 text-blue-600 bg-white hover:bg-blue-50'}`}>
@@ -300,11 +300,11 @@ export default function DriverPanel({ onTripChange }) {
               </div>
               {gpsStatus
                 ? <div>
-                    <p className={`text-xs ${dark ? 'text-slate-400' : 'text-blue-500'}`}>Last: {gpsStatus}</p>
-                    {gpsCoords && <p className={`text-xs font-mono mt-0.5 ${dark ? 'text-slate-500' : 'text-blue-400'}`}>
-                      {gpsCoords.lat.toFixed(5)}, {gpsCoords.lng.toFixed(5)}
-                    </p>}
-                  </div>
+                  <p className={`text-xs ${dark ? 'text-slate-400' : 'text-blue-500'}`}>Last: {gpsStatus}</p>
+                  {gpsCoords && <p className={`text-xs font-mono mt-0.5 ${dark ? 'text-slate-500' : 'text-blue-400'}`}>
+                    {gpsCoords.lat.toFixed(5)}, {gpsCoords.lng.toFixed(5)}
+                  </p>}
+                </div>
                 : <p className={`text-xs ${dark ? 'text-slate-500' : 'text-blue-400'}`}>Waiting for first update...</p>
               }
             </div>
