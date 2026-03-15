@@ -141,11 +141,11 @@ function LiveTrips({ auth, toast }) {
           <div className="grid grid-cols-2 gap-2 text-xs mb-2">
             <div className="bg-gray-50 rounded-lg p-2">
               <p className="text-gray-400 uppercase tracking-wide font-semibold mb-0.5">Bus</p>
-              <p className="text-gray-800 font-semibold">{t.bus?.numberPlate || '�'}</p>
+              <p className="text-gray-800 font-semibold">{t.bus?.numberPlate || 'ï¿½'}</p>
             </div>
             <div className="bg-gray-50 rounded-lg p-2">
               <p className="text-gray-400 uppercase tracking-wide font-semibold mb-0.5">Driver</p>
-              <p className="text-gray-800 font-semibold">{t.users?.fname || t.users?.emailId || '�'}</p>
+              <p className="text-gray-800 font-semibold">{t.users?.fname || t.users?.emailId || 'ï¿½'}</p>
             </div>
           </div>
           {t.busLocation?.busLatitude
@@ -599,7 +599,7 @@ function RoutesAdmin({ auth, toast }) {
       {showAddRoute && (
         <Card className="mb-4">
           <form onSubmit={handleCreate} className="flex gap-3">
-            <Input placeholder="Route name � e.g. 333" value={newRouteName}
+            <Input placeholder="Route name ï¿½ e.g. 333" value={newRouteName}
               onChange={e => setNewRouteName(e.target.value)} required className="flex-1" />
             <Button type="submit" disabled={saving}>{saving ? 'Creating...' : 'Create'}</Button>
           </form>
@@ -683,14 +683,14 @@ function FleetAdmin({ auth, toast }) {
       {showForm && (
         <Card className="mb-4">
           <form onSubmit={handleAdd} className="flex gap-3">
-            <Input placeholder="Number plate � e.g. MH04LT0310" value={plate}
+            <Input placeholder="Number plate ï¿½ e.g. MH04LT0310" value={plate}
               onChange={e => setPlate(e.target.value)} required className="flex-1" />
             <Button type="submit" disabled={saving}>{saving ? 'Registering...' : 'Register'}</Button>
           </form>
         </Card>
       )}
       <form onSubmit={e => { e.preventDefault(); loadBuses(search) }} className="flex gap-3 mb-4">
-        <Input placeholder="Search by plate prefix � e.g. MH" value={search}
+        <Input placeholder="Search by plate prefix ï¿½ e.g. MH" value={search}
           onChange={e => setSearch(e.target.value)} className="flex-1" />
         <Button type="submit">Search</Button>
       </form>
@@ -734,15 +734,8 @@ function TripHistory({ auth, toast, dark }) {
   useEffect(() => {
     async function load() {
       try {
-        const data = await fetch('https://bustracker-n2lh.onrender.com/admin/tripHistory', {
-          headers: { 'Authorization': 'Basic ' + btoa(auth.email + ':' + auth.password) }
-        })
-        if (data.ok) {
-          const json = await data.json()
-          setTrips(Array.isArray(json) ? json : [])
-        } else {
-          toast('Trip history endpoint not available yet. Ask friend to add it.', 'warning')
-        }
+        const json = await tripApi.getTripHistory(auth)
+        setTrips(Array.isArray(json) ? json : [])
       } catch { toast('Could not load trip history', 'error') }
       setLoading(false)
     }
@@ -793,11 +786,11 @@ function TripHistory({ auth, toast, dark }) {
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className={`rounded-lg p-2 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
                     <p className={`uppercase tracking-wide font-semibold mb-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Bus</p>
-                    <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.bus?.numberPlate || '�'}</p>
+                    <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.bus?.numberPlate || ''}</p>
                   </div>
                   <div className={`rounded-lg p-2 ${dark ? 'bg-slate-900' : 'bg-gray-50'}`}>
                     <p className={`uppercase tracking-wide font-semibold mb-0.5 ${dark ? 'text-slate-500' : 'text-gray-400'}`}>Driver</p>
-                    <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.users?.fname || t.users?.emailId || '�'}</p>
+                    <p className={`font-semibold ${dark ? 'text-white' : 'text-gray-800'}`}>{t.users?.fname || t.users?.emailId || ''}</p>
                   </div>
                 </div>
               </div>
@@ -823,10 +816,10 @@ function Analytics({ auth, dark }) {
         ])
         const buses = await busApi.search('MH', auth).catch(() => [])
 
-        // Route popularity � stops per route
+        // Route popularity  stops per route
         const routesByStops = [...routes].sort((a, b) => (b.routeStops?.length || 0) - (a.routeStops?.length || 0))
 
-        // Stop coverage � how many routes per stop
+        // Stop coverage  how many routes per stop
         const stopCoverage = stops.map(s => ({
           name: s.stopName,
           routes: s.routeStops?.length || 0
