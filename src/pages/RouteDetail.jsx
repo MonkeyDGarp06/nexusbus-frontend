@@ -265,7 +265,7 @@ export default function RouteDetail() {
       </div>
 
       {fromStop && toStop && (
-        <p className="text-xs text-blue-600 font-medium mb-3">Showing: {fromStop} ? {toStop}</p>
+        <p className="text-xs text-blue-600 font-medium mb-3">Showing: {fromStop} → {toStop}</p>
       )}
 
       {/* Map */}
